@@ -15,18 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WS_FORMAT_SCRIPT' ) ) {
-	define( 'WS_FORMAT_SCRIPT', 'word-switcher-core-blocks-register-format-type' );
+	define( 'WS_FORMAT_SCRIPT', 'word-switcher-register-format-type' );
 }
 
 if ( ! defined( 'WS_IAPI_SCRIPT' ) ) {
-	define( 'WS_IAPI_SCRIPT', 'word-switcher-core-blocks-interactivity-api' );
+	define( 'WS_IAPI_SCRIPT', 'word-switcher-interactivity-api' );
 }
 
 if ( ! defined( 'WS_STYLES' ) ) {
-	define( 'WS_STYLES', 'word-switcher-core-blocks-styles' );
+	define( 'WS_STYLES', 'word-switcher-styles' );
 }
 
-function word_switcher_core_blocks_register_assets() {
+function word_switcher_register_assets() {
 	$dir = plugin_dir_path( __FILE__ );
 	// Register the Format API script for the editor.
 	$script_asset = require "$dir/build/js/register-format-type.asset.php";
@@ -56,19 +56,16 @@ function word_switcher_core_blocks_register_assets() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'build/css/word-switcher-styles.css' )
 	);
 }
-add_action( 'init', 'word_switcher_core_blocks_register_assets' );
+add_action( 'init', 'word_switcher_register_assets' );
 
-function word_switcher_core_blocks_enqueue_block_editor_assets() {
+function word_switcher_enqueue_block_editor_assets() {
 	wp_enqueue_script( WS_FORMAT_SCRIPT );
 	wp_enqueue_script( WS_IAPI_SCRIPT );
 }
 
-add_action( 'enqueue_block_editor_assets', 'word_switcher_core_blocks_enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'word_switcher_enqueue_block_editor_assets' );
 
-add_filter( 'render_block_core/paragraph', 'word_switcher_core_blocks_render_block', 10, 2 );
-add_filter( 'render_block_core/heading', 'word_switcher_core_blocks_render_block', 10, 2 );
-
-function word_switcher_core_blocks_render_block( $block_content, $block ) {
+function word_switcher_render_block( $block_content, $block ) {
 	if ( strpos( $block_content, 'class="word-switcher' ) === false ) {
 		return $block_content;
 	}
@@ -104,7 +101,7 @@ function word_switcher_core_blocks_render_block( $block_content, $block ) {
 
 	// Return to parent and add Interactivity API attributes.
 	$processor->seek( 'parent' );
-	$processor->set_attribute( 'data-wp-interactive', 'devblog/word-switcher-core-blocks' );
+	$processor->set_attribute( 'data-wp-interactive', 'devblog/word-switcher' );
 	$processor->set_attribute( 'data-wp-init', 'callbacks.init' );
 	$processor->set_attribute(
 		'data-wp-context',
@@ -124,3 +121,6 @@ function word_switcher_core_blocks_render_block( $block_content, $block ) {
 
 	return $processor->get_updated_html();
 }
+
+add_filter( 'render_block_core/paragraph', 'word_switcher_render_block', 10, 2 );
+add_filter( 'render_block_core/heading', 'word_switcher_render_block', 10, 2 );
