@@ -39,6 +39,5 @@ Currently, the comma ( , ) is the only supported separator. Support for custom a
    npm run build
    ```
 
-## License
-
-GPLv2
+== 1.0.0 ==
+* Add word switching functionality in Gutenberg
