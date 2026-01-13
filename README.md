@@ -2,19 +2,21 @@
 
 ## Description
 
-A WordPress plugin that add word switching functionality in Gutenberg paragraph and header block.
+A lightweight WordPress plugin that adds word-switching functionality to Gutenberg’s Paragraph and Heading blocks, allowing users to dynamically replace or rotate selected words for more engaging and flexible content presentation.
 
 ## Installation
 
-1. Download the plugin.
+1. Download or install the plugin.
 
 2. Activate the plugin in your WordPress admin panel
 
 ## How to use?
 
-Select words that you want to switch. Then, click Mark as Word Switcher Area from word formatter toolbar.
+Simply select the words you want to switch, then click ‘Mark as Word Switcher Area’ from the Word Formatter toolbar to enable dynamic word switching in your content.
 
 ![Word Switcher](word-switcher.png?raw=true "Word Switcher")
+
+Currently, the comma ( , ) is the only supported separator. Support for custom and flexible separator characters is under development and will be available soon.
 
 ## Development
 
