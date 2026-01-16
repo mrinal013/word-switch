@@ -1,9 +1,10 @@
 {
-  "name": "word-switcher",
+  "name": "word-switch",
   "version": "1.0.0",
   "scripts": {
     "build": "wp-scripts build --experimental-modules",
-    "start": "wp-scripts start --experimental-modules"
+    "start": "wp-scripts start --experimental-modules",
+    "plugin-zip": "wp-scripts plugin-zip"
   },
   "dependencies": {
     "@wordpress/block-editor": "^15.9.0",

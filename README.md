@@ -39,5 +39,13 @@ Currently, the comma ( , ) is the only supported separator. Support for custom a
    npm run build
    ```
 
+## Changelog
+
+== 1.0.1 ==
+
+- Change prefix WS to WORD_SWITCH
+- Made zip for wordpress.org
+
 == 1.0.0 ==
-* Add word switching functionality in Gutenberg
+
+- Add word switching functionality in Gutenberg
