@@ -12,6 +12,26 @@ module.exports = window["wp"]["blockEditor"];
 
 /***/ },
 
+/***/ "@wordpress/components"
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+(module) {
+
+module.exports = window["wp"]["components"];
+
+/***/ },
+
+/***/ "@wordpress/hooks"
+/*!*******************************!*\
+  !*** external ["wp","hooks"] ***!
+  \*******************************/
+(module) {
+
+module.exports = window["wp"]["hooks"];
+
+/***/ },
+
 /***/ "@wordpress/rich-text"
 /*!**********************************!*\
   !*** external ["wp","richText"] ***!
@@ -117,32 +137,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+/**
+ * ToolbarButton can be used to add actions to a toolbar.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/components/
+ */
 
 
 
 const WORD_SWITCH_FORMAT_TYPE = "word-switch/format-type-delimiter";
+const WORD_SWITCH_FORMAT_TYPE_WRAP = "word-switch/format-type-wrap";
+const MyMultiTagButton = ({
+  isActive,
+  value,
+  onChange
+}) => {
+  const selectedString = value.text.substring(value.start, value.end);
+  const wordsArray = selectedString.split(",");
+  const obj = {
+    words: wordsArray,
+    currentIndex: 0,
+    isFading: false
+  };
+  const objString = JSON.stringify(obj);
+  const onToggle = () => {
+    // Apply the first format
+    let nextValue = (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__.toggleFormat)(value, {
+      type: WORD_SWITCH_FORMAT_TYPE_WRAP,
+      attributes: {
+        "data-wp-interactive": "wpdevagent/word-switch",
+        "data-wp-init": "callbacks.init",
+        "data-wp-context": objString
+      }
+    });
+    // Apply the second format to the result of the first
+    nextValue = (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__.toggleFormat)(nextValue, {
+      type: WORD_SWITCH_FORMAT_TYPE,
+      attributes: {
+        "data-wp-text": "state.currentWord",
+        "data-wp-class--fade": "context.isFading"
+      }
+    });
+    onChange(nextValue);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichTextToolbarButton, {
+    icon: "editor-code",
+    onClick: onToggle,
+    title: "Word Wrap",
+    isActive: isActive
+  });
+};
 (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__.registerFormatType)(WORD_SWITCH_FORMAT_TYPE, {
-  title: "Word Switch",
+  title: "Content",
   tagName: "span",
   className: "word-switch",
-  edit: ({
-    isActive,
-    onChange,
-    value
-  }) => {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichTextToolbarButton, {
-      icon: "update",
-      title: "Mark as Word Switcher Area",
-      onClick: () => {
-        onChange((0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__.toggleFormat)(value, {
-          type: WORD_SWITCH_FORMAT_TYPE
-        }));
-      },
-      isActive: isActive
-    });
-  }
+  edit: MyMultiTagButton
+});
+(0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_0__.registerFormatType)(WORD_SWITCH_FORMAT_TYPE_WRAP, {
+  title: "Wrap",
+  tagName: "span",
+  className: "word-switch-wrap",
+  edit: null
 });
 })();
 

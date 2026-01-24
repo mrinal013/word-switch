@@ -66,53 +66,11 @@ function word_switch_enqueue_block_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'word_switch_enqueue_block_editor_assets' );
 
 function word_switch_render_block( $block_content, $block ) {
-	if ( strpos( $block_content, 'class="word-switch' ) === false ) {
+	if ( strpos( $block_content, 'class="word-switch-wrap' ) === false ) {
 		return $block_content;
 	}
 
 	$processor = new WP_HTML_Tag_Processor( $block_content );
-
-	// Find the first tag (the block wrapper)
-	if ( ! $processor->next_tag() ) {
-		return $block_content;
-	}
-
-	$processor->set_bookmark( 'parent' );
-	$words = array();
-
-	while ( $processor->next_tag(
-		array(
-			'tag_name'   => 'span',
-			'class_name' => 'word-switch',
-		)
-	) ) {
-		// Add Interactivity API directives
-		$processor->set_attribute( 'data-wp-text', 'state.currentWord' );
-		$processor->set_attribute( 'data-wp-class--fade', 'context.isFading' );
-
-		// Extract the comma-seperated words
-		if ( $processor->next_token() ) {
-			$text_content = $processor->get_modifiable_text();
-			if ( $text_content ) {
-				$words = array_filter( array_map( 'trim', explode( ', ', $text_content ) ) );
-			}
-		}
-	}
-
-	// Return to parent and add Interactivity API attributes.
-	$processor->seek( 'parent' );
-	$processor->set_attribute( 'data-wp-interactive', 'wpdevagent/word-switch' );
-	$processor->set_attribute( 'data-wp-init', 'callbacks.init' );
-	$processor->set_attribute(
-		'data-wp-context',
-		wp_json_encode(
-			array(
-				'words'        => $words,
-				'currentIndex' => 0,
-				'isFading'     => false,
-			)
-		)
-	);
 
 	if ( ! is_admin() ) {
 		wp_enqueue_script_module( WORD_SWITCH_IAPI_SCRIPT );
