@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "@wordpress/block-editor": "^15.9.0",
+    "@wordpress/components": "^32.0.0",
+    "@wordpress/element": "^6.38.0",
+    "@wordpress/hooks": "^4.38.0",
     "@wordpress/rich-text": "^7.36.0",
     "@wordpress/scripts": "^31.1.0"
   },
