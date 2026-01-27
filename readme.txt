@@ -16,6 +16,10 @@ selected words for more engaging and flexible content presentation.
 
 With this plugin, WordPress gutenberg editor’s paragraph and heading block get an extra format named ‘word switch’.
 
+== Let's see how it works ==
+
+https://www.youtube.com/watch?v=a-s5YnXF1QM
+
 == Changelog ==
 == 1.1.0 ==
 - Multiple seperate word switching feature

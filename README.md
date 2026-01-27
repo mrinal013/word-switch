@@ -12,9 +12,13 @@ A lightweight WordPress plugin that adds word-switching functionality to Gutenbe
 
 ## How to use?
 
-Simply select the words you want to switch, then click ‘Mark as Word Switcher Area’ from the Word Formatter toolbar to enable dynamic word switching in your content.
+A lightweight WordPress plugin that adds word-switching functionality to Gutenberg editor's 
+Paragraph and Heading blocks, allowing users to dynamically replace or rotate 
+selected words for more engaging and flexible content presentation.
 
-![Word Switch](word-switch.png?raw=true "Word Switch")
+With this plugin, WordPress gutenberg editor’s paragraph and heading block get an extra format named ‘word switch’.
+
+[![Word Switch plugin WordPress](https://www.youtube.com/watch?v=6sqoOOXi7kQ)]
 
 Currently, the comma ( , ) is the only supported separator. Support for custom and flexible separator characters is under development and will be available soon.
 
