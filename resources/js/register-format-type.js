@@ -1,3 +1,10 @@
+/**
+ * Toggles a format object to a Rich Text value at the current selection.
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-rich-text/#toggleformat
+ *
+ * Registers a new format provided a unique name and an object defining its behavior.
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-rich-text/#registerformattype
+ */
 import { toggleFormat, registerFormatType } from "@wordpress/rich-text";
 
 /**
@@ -28,49 +35,14 @@ const MyMultiTagButton = ({ isActive, value, onChange }) => {
     return null;
   }
 
-  const selectedString = value.text.substring(value.start, value.end);
-  const wordsArray = selectedString.split(",");
-
-  value.activeFormats.forEach(function (format) {
-    let type = format?.type;
-    if (!type.includes("word-switch/")) {
-      let tagName = format?.tagName;
-      let style = format?.attributes?.style;
-      let className = format?.attributes?.className;
-      console.log(format);
-      wordsArray.map((word, index) => {
-        return (wordsArray[
-          index
-        ] = `<${tagName} class=${className} style=${style}>${word}</${tagName}>`);
-      });
-    }
-  });
-
-  const obj = {
-    words: wordsArray,
-    currentIndex: 0,
-    isFading: false,
-  };
-
-  const objString = JSON.stringify(obj);
-
   const onToggle = () => {
     // Apply the first format
     let nextValue = toggleFormat(value, {
       type: WORD_SWITCH_FORMAT_TYPE_WRAP,
-      attributes: {
-        "data-wp-interactive": "wpdevagent/word-switch",
-        "data-wp-init": "callbacks.init",
-        "data-wp-context": objString,
-      },
     });
     // Apply the second format to the result of the first
     nextValue = toggleFormat(nextValue, {
       type: WORD_SWITCH_FORMAT_TYPE,
-      attributes: {
-        "data-wp-text": "state.currentWord",
-        "data-wp-class--fade": "context.isFading",
-      },
     });
 
     onChange(nextValue);
